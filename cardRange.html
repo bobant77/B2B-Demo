@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Card Ranges - Fulfillment Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Empire Brand Color */
+            --empire-purple: #5C2D91;
+            --empire-purple-dark: #4A2275;
+            --empire-purple-light: #7B4BA8;
+            
+            /* Primary Palette */
+            --primary: #1a1a2e;
+            --primary-light: #2d2d44;
+            --accent: #e94560;
+            --accent-hover: #ff6b6b;
+            
+            /* Surfaces */
+            --surface: #ffffff;
+            --surface-elevated: #f8f9fc;
+            
+            /* Text */
+            --text-primary: #1a1a2e;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            
+            /* Borders */
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            
+            /* Status */
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.1);
+            --info: #3b82f6;
+            --info-bg: rgba(59, 130, 246, 0.1);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --shadow-purple: 0 4px 20px rgba(92, 45, 145, 0.25);
+            
+            /* Radius */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            /* Transitions */
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef2f7 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 40px;
+        }
+
+        /* Return Button */
+        .return-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 32px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .return-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--surface-elevated);
+        }
+
+        .return-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            animation: fadeInDown 0.5s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--empire-purple) 0%, var(--empire-purple-dark) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-purple);
+        }
+
+        .page-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .page-title-group h1 {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .order-number {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-number strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Shipment Tabs */
+        .shipment-tabs-container {
+            margin-bottom: 24px;
+            animation: fadeInUp 0.5s ease-out 0.1s backwards;
+        }
+
+        .shipment-tabs {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface);
+            padding: 6px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .shipment-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .shipment-tab:hover {
+            color: var(--text-primary);
+            background: var(--surface-elevated);
+        }
+
+        .shipment-tab.active {
+            background: linear-gradient(135deg, var(--empire-purple) 0%, var(--empire-purple-dark) 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(92, 45, 145, 0.25);
+        }
+
+        .shipment-tab.active:hover {
+            background: linear-gradient(135deg, var(--empire-purple) 0%, var(--empire-purple-dark) 100%);
+        }
+
+        .shipment-tab svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .shipment-tab .tab-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 10px;
+        }
+
+        .shipment-tab.active .tab-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .shipment-tab .tab-badge.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .shipment-tab.active .tab-badge.pending {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        /* Card Ranges Container */
+        .card-ranges-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        /* Individual Card Range */
+        .card-range-item {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .card-range-item:nth-child(1) { animation-delay: 0.15s; }
+        .card-range-item:nth-child(2) { animation-delay: 0.25s; }
+        .card-range-item:nth-child(3) { animation-delay: 0.35s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-range-item:hover {
+            border-color: rgba(92, 45, 145, 0.2);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-range-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .card-info {
+            display: flex;
+            gap: 16px;
+        }
+
+        .card-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-image svg {
+            width: 32px;
+            height: 32px;
+            color: var(--text-muted);
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-sku {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .card-meta span {
+            margin-right: 12px;
+        }
+
+        .card-id {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .status-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .status-badge.completed {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .status-badge.pending {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .status-badge.empty {
+            background: rgba(100, 116, 139, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .status-badge.error {
+            background: var(--error-bg);
+            color: var(--error);
+        }
+
+        /* Card Range Inputs */
+        .card-range-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .input-group input {
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: var(--surface);
+            transition: var(--transition);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--empire-purple);
+            box-shadow: 0 0 0 4px rgba(92, 45, 145, 0.08);
+        }
+
+        .input-group input.filled {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, transparent 100%);
+        }
+
+        .input-group input:disabled {
+            background: var(--surface-elevated);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        /* Range Info */
+        .range-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .range-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .range-stat svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+        }
+
+        .range-stat strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .range-stat.valid strong {
+            color: var(--success);
+        }
+
+        .range-stat.invalid strong {
+            color: var(--error);
+        }
+
+        /* Tracking Section */
+        .tracking-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.5s ease-out 0.45s backwards;
+        }
+
+        .tracking-section h3 {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tracking-section h3 svg {
+            width: 18px;
+            height: 18px;
+            color: var(--empire-purple);
+        }
+
+        .tracking-input-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .tracking-input-row input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: var(--surface);
+            transition: var(--transition);
+        }
+
+        .tracking-input-row input:focus {
+            outline: none;
+            border-color: var(--empire-purple);
+            box-shadow: 0 0 0 4px rgba(92, 45, 145, 0.08);
+        }
+
+        .tracking-input-row input:disabled {
+            background: var(--surface-elevated);
+            cursor: not-allowed;
+        }
+
+        .confirm-tracking-btn {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--empire-purple) 0%, var(--empire-purple-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .confirm-tracking-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-purple);
+        }
+
+        .confirm-tracking-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            animation: fadeInUp 0.5s ease-out 0.55s backwards;
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 280px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(233, 69, 96, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Success State */
+        .success-message {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: var(--success-bg);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message svg {
+            width: 24px;
+            height: 24px;
+            color: var(--success);
+        }
+
+        .success-message span {
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .shipment-tabs {
+                flex-wrap: wrap;
+            }
+
+            .card-range-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-input-row {
+                flex-direction: column;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Return to Order Button -->
+        <a href="index.html" class="return-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Return to Order
+        </a>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-header-left">
+                <div class="page-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="14" x="2" y="5" rx="2"/>
+                        <line x1="2" x2="22" y1="10" y2="10"/>
+                    </svg>
+                </div>
+                <div class="page-title-group">
+                    <h1>Enter Card Ranges</h1>
+                    <div class="order-number">
+                        Order <strong>#ORD-2024-001847</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipment Tabs -->
+        <div class="shipment-tabs-container">
+            <div class="shipment-tabs">
+                <button class="shipment-tab active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                    Reship
+                </button>
+                <button class="shipment-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    Reship 1
+                    
+                </button>
+                <button class="shipment-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    Reship 2
+              
+                </button>
+            </div>
+        </div>
+
+        <!-- Card Ranges -->
+        <div class="card-ranges-container">
+            <!-- Card Range 1 - Completed -->
+            <div class="card-range-item">
+                <div class="card-range-header">
+                    <div class="card-info">
+                        <div class="card-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                <line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="card-details">
+                            <span class="card-sku">SKU-GC-100-VISA</span>
+                            <div class="card-meta">
+                                <span>$100.00</span>
+                                <span>× 25 cards</span>
+                            </div>
+                            <span class="card-id">Card ID: GC-2024-V100-001</span>
+                        </div>
+                    </div>
+                    <span class="status-badge completed">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Completed
+                    </span>
+                </div>
+                <div class="card-range-inputs">
+                    <div class="input-group">
+                        <label>First Card</label>
+                        <input type="text" value="1234-1234-1234-1344" class="filled" disabled>
+                    </div>
+                    <div class="input-group">
+                        <label>Last Card</label>
+                        <input type="text" value="1234-1232-1234-1234" class="filled" disabled>
+                    </div>
+                </div>
+                <div class="range-info">
+                    <div class="range-stat valid">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Range: <strong>25 cards</strong>
+                    </div>
+                    <div class="range-stat valid">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Qty Match: <strong>Valid</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Range 2 - Pending (Partially filled) -->
+            <div class="card-range-item">
+                <div class="card-range-header">
+                    <div class="card-info">
+                        <div class="card-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                <line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="card-details">
+                            <span class="card-sku">SKU-GC-050-MSTR</span>
+                            <div class="card-meta">
+                                <span>$50.00</span>
+                                <span>× 15 cards</span>
+                            </div>
+                            <span class="card-id">Card ID: GC-2024-M050-002</span>
+                        </div>
+                    </div>
+                    <span class="status-badge pending">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        Pending
+                    </span>
+                </div>
+                <div class="card-range-inputs">
+                    <div class="input-group">
+                        <label>First Card</label>
+                        <input type="text" value="1234-1232-1234-1234" class="filled" placeholder="Enter first card number">
+                    </div>
+                    <div class="input-group">
+                        <label>Last Card</label>
+                        <input type="text" placeholder="Enter last card number">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Range 3 - Empty -->
+            <div class="card-range-item">
+                <div class="card-range-header">
+                    <div class="card-info">
+                        <div class="card-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                <line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="card-details">
+                            <span class="card-sku">SKU-GC-025-AMEX</span>
+                            <div class="card-meta">
+                                <span>$25.00</span>
+                                <span>× 10 cards</span>
+                            </div>
+                            <span class="card-id">Card ID: GC-2024-A025-003</span>
+                        </div>
+                    </div>
+                    <span class="status-badge empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" x2="12" y1="8" y2="16"/>
+                            <line x1="8" x2="16" y1="12" y2="12"/>
+                        </svg>
+                        Not Started
+                    </span>
+                </div>
+                <div class="card-range-inputs">
+                    <div class="input-group">
+                        <label>First Card</label>
+                        <input type="text" placeholder="Enter first card number">
+                    </div>
+                    <div class="input-group">
+                        <label>Last Card</label>
+                        <input type="text" placeholder="Enter last card number">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking Section -->
+        <div class="tracking-section">
+            <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.29 7 12 12 20.71 7"/>
+                    <line x1="12" x2="12" y1="22" y2="12"/>
+                </svg>
+                Tracking Information
+            </h3>
+            <div class="tracking-input-row">
+                <input type="text" id="trackingInput" placeholder="Enter tracking number after confirming submission..." disabled>
+                <button class="confirm-tracking-btn" id="confirmTrackingBtn" disabled>
+                    Confirm Tracking
+                </button>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <span>Card ranges submitted successfully! Please enter tracking number.</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="submit-btn" id="submitBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Confirm & Submit
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Shipment tab switching
+        document.querySelectorAll('.shipment-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.shipment-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Submit button functionality
+        const submitBtn = document.getElementById('submitBtn');
+        const trackingInput = document.getElementById('trackingInput');
+        const confirmTrackingBtn = document.getElementById('confirmTrackingBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        submitBtn.addEventListener('click', function() {
+            // Simulate submission - generate tracking ID
+            const trackingId = 'TRK-' + Date.now().toString().slice(-10);
+            
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Enable tracking input
+            trackingInput.disabled = false;
+            trackingInput.placeholder = 'Enter tracking number (e.g., ' + trackingId + ')';
+            trackingInput.focus();
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Submitted
+            `;
+        });
+
+        // Enable confirm tracking button when input has value
+        trackingInput.addEventListener('input', function() {
+            confirmTrackingBtn.disabled = this.value.trim() === '';
+        });
+
+        // Confirm tracking functionality
+        confirmTrackingBtn.addEventListener('click', function() {
+            if (trackingInput.value.trim()) {
+                // Update success message
+                successMessage.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    <span>Order completed! Tracking: ${trackingInput.value}</span>
+                `;
+                
+                // Disable tracking input
+                trackingInput.disabled = true;
+                confirmTrackingBtn.disabled = true;
+                confirmTrackingBtn.textContent = 'Confirmed';
+            }
+        });
+
+        // Input validation for card numbers (format as user types)
+        document.querySelectorAll('.card-range-inputs input:not([disabled])').forEach(input => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                let formatted = value.match(/.{1,4}/g)?.join('-') || value;
+                if (formatted.length <= 19) {
+                    e.target.value = formatted;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
