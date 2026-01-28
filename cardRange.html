@@ -77,37 +77,6 @@
             padding: 32px 40px;
         }
 
-        /* Return Button */
-        .return-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 32px;
-            background: var(--surface);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            margin-bottom: 1rem;
-        }
-
-        .return-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--surface-elevated);
-        }
-
-        .return-btn svg {
-            width: 16px;
-            height: 16px;
-        }
-
         /* Page Header */
         .page-header {
             background: var(--surface);
@@ -130,10 +99,49 @@
             }
         }
 
+        .page-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
         .page-header-left {
             display: flex;
             align-items: center;
             gap: 20px;
+        }
+
+        /* Return Button */
+        .return-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--surface-elevated);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .return-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--surface);
+        }
+
+        .return-btn svg {
+            width: 14px;
+            height: 14px;
         }
 
         .page-icon {
@@ -173,6 +181,52 @@
         .order-number strong {
             color: var(--text-primary);
             font-weight: 600;
+        }
+
+        /* Shipping Information */
+        .shipping-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .shipping-section h3 {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shipping-section h3 svg {
+            width: 16px;
+            height: 16px;
+            color: var(--empire-purple);
+        }
+
+        .shipping-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .shipping-details p {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .shipping-details .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: 8px;
         }
 
         /* Shipment Tabs */
@@ -229,35 +283,6 @@
             height: 16px;
         }
 
-        .shipment-tab .tab-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 20px;
-            height: 20px;
-            padding: 0 6px;
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-            font-size: 0.7rem;
-            font-weight: 700;
-            border-radius: 10px;
-        }
-
-        .shipment-tab.active .tab-badge {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-        }
-
-        .shipment-tab .tab-badge.pending {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-        }
-
-        .shipment-tab.active .tab-badge.pending {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-        }
-
         /* Card Ranges Container */
         .card-ranges-container {
             display: flex;
@@ -279,7 +304,6 @@
 
         .card-range-item:nth-child(1) { animation-delay: 0.15s; }
         .card-range-item:nth-child(2) { animation-delay: 0.25s; }
-        .card-range-item:nth-child(3) { animation-delay: 0.35s; }
 
         @keyframes fadeInUp {
             from {
@@ -338,7 +362,7 @@
         .card-details {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .card-sku {
@@ -357,10 +381,43 @@
             margin-right: 12px;
         }
 
-        .card-id {
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
             font-size: 0.8rem;
-            color: var(--text-muted);
-            font-family: monospace;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .edit-btn:hover {
+            background: var(--empire-purple);
+            color: white;
+            border-color: var(--empire-purple);
+        }
+
+        .edit-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .edit-btn.editing {
+            background: var(--empire-purple);
+            color: white;
+            border-color: var(--empire-purple);
         }
 
         /* Status Badge */
@@ -393,11 +450,6 @@
         .status-badge.empty {
             background: rgba(100, 116, 139, 0.1);
             color: var(--text-secondary);
-        }
-
-        .status-badge.error {
-            background: var(--error-bg);
-            color: var(--error);
         }
 
         /* Card Range Inputs */
@@ -488,6 +540,37 @@
 
         .range-stat.invalid strong {
             color: var(--error);
+        }
+
+        /* Add Card Button */
+        .add-card-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: var(--surface);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-lg);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease-out 0.35s backwards;
+            margin-bottom: 2rem;
+        }
+
+        .add-card-btn:hover {
+            border-color: var(--empire-purple);
+            color: var(--empire-purple);
+            background: var(--surface-elevated);
+        }
+
+        .add-card-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         /* Tracking Section */
@@ -660,9 +743,14 @@
                 padding: 20px;
             }
 
-            .page-header {
+            .page-header-top {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 16px;
+            }
+
+            .shipping-info {
+                grid-template-columns: 1fr;
                 gap: 16px;
             }
 
@@ -686,40 +774,73 @@
 </head>
 <body>
     <div class="container">
-        <!-- Return to Order Button -->
-        <a href="index.html" class="return-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m15 18-6-6 6-6"/>
-            </svg>
-            Return to Order
-        </a>
-
         <!-- Page Header -->
         <div class="page-header">
-            <div class="page-header-left">
-                <div class="page-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="20" height="14" x="2" y="5" rx="2"/>
-                        <line x1="2" x2="22" y1="10" y2="10"/>
-                    </svg>
+            <div class="page-header-top">
+                <div class="page-header-left">
+                    <div class="page-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="14" x="2" y="5" rx="2"/>
+                            <line x1="2" x2="22" y1="10" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="page-title-group">
+                        <h1>Enter Card Ranges</h1>
+                        <div class="order-number">
+                            Order <strong>#ORD-2024-001847</strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="page-title-group">
-                    <h1>Enter Card Ranges</h1>
-                    <div class="order-number">
-                        Order <strong>#ORD-2024-001847</strong>
+                <a href="index.html" class="return-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                    Return to Order
+                </a>
+            </div>
+
+            <!-- Shipping Information -->
+            <div class="shipping-info">
+                <div class="shipping-section">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Shipping Address
+                    </h3>
+                    <div class="shipping-details">
+                        <p><strong>John Anderson</strong></p>
+                        <p>Empire Co. Distribution Center</p>
+                        <p>Toronto, ON M5V 3A8, Canada</p>
+                    </div>
+                </div>
+
+                <div class="shipping-section">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.29 7 12 12 20.71 7"/>
+                        </svg>
+                        Order Details
+                    </h3>
+                    <div class="shipping-details">
+                        <div class="label">Shipping Method</div>
+                        <p>Express Courier</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Shipment Tabs -->
+        <!-- Shipment Tabs (Reordered: Reship 2, Reship 1, Reship) -->
         <div class="shipment-tabs-container">
             <div class="shipment-tabs">
                 <button class="shipment-tab active">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
                     </svg>
-                    Reship
+                    Reship 2
                 </button>
                 <button class="shipment-tab">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -727,22 +848,19 @@
                         <path d="M3 3v5h5"/>
                     </svg>
                     Reship 1
-                    
                 </button>
                 <button class="shipment-tab">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                        <path d="M3 3v5h5"/>
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                     </svg>
-                    Reship 2
-              
+                    Reship
                 </button>
             </div>
         </div>
 
-        <!-- Card Ranges -->
-        <div class="card-ranges-container">
-            <!-- Card Range 1 - Completed -->
+        <!-- Card Ranges (Only 2 Cards) -->
+        <div class="card-ranges-container" id="cardRangesContainer">
+            <!-- Card Range 1 -->
             <div class="card-range-item">
                 <div class="card-range-header">
                     <div class="card-info">
@@ -758,43 +876,38 @@
                                 <span>$100.00</span>
                                 <span>× 25 cards</span>
                             </div>
-                            <span class="card-id">Card ID: GC-2024-V100-001</span>
                         </div>
                     </div>
-                    <span class="status-badge completed">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        Completed
-                    </span>
+                    <div class="header-actions">
+                        <button class="edit-btn" onclick="toggleEdit(this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                <path d="m15 5 4 4"/>
+                            </svg>
+                            Edit
+                        </button>
+                        <span class="status-badge pending">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            Pending
+                        </span>
+                    </div>
                 </div>
                 <div class="card-range-inputs">
                     <div class="input-group">
                         <label>First Card</label>
-                        <input type="text" value="1234-1234-1234-1344" class="filled" disabled>
+                        <input type="text" placeholder="Enter first card number" disabled>
                     </div>
                     <div class="input-group">
                         <label>Last Card</label>
-                        <input type="text" value="1234-1232-1234-1234" class="filled" disabled>
-                    </div>
-                </div>
-                <div class="range-info">
-                    <div class="range-stat valid">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        Range: <strong>25 cards</strong>
-                    </div>
-                    <div class="range-stat valid">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        Qty Match: <strong>Valid</strong>
+                        <input type="text" placeholder="Enter last card number" disabled>
                     </div>
                 </div>
             </div>
 
-            <!-- Card Range 2 - Pending (Partially filled) -->
+            <!-- Card Range 2 -->
             <div class="card-range-item">
                 <div class="card-range-header">
                     <div class="card-info">
@@ -810,69 +923,48 @@
                                 <span>$50.00</span>
                                 <span>× 15 cards</span>
                             </div>
-                            <span class="card-id">Card ID: GC-2024-M050-002</span>
                         </div>
                     </div>
-                    <span class="status-badge pending">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                        Pending
-                    </span>
-                </div>
-                <div class="card-range-inputs">
-                    <div class="input-group">
-                        <label>First Card</label>
-                        <input type="text" value="1234-1232-1234-1234" class="filled" placeholder="Enter first card number">
-                    </div>
-                    <div class="input-group">
-                        <label>Last Card</label>
-                        <input type="text" placeholder="Enter last card number">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Range 3 - Empty -->
-            <div class="card-range-item">
-                <div class="card-range-header">
-                    <div class="card-info">
-                        <div class="card-image">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="14" x="2" y="5" rx="2"/>
-                                <line x1="2" x2="22" y1="10" y2="10"/>
+                    <div class="header-actions">
+                        <button class="edit-btn" onclick="toggleEdit(this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                <path d="m15 5 4 4"/>
                             </svg>
-                        </div>
-                        <div class="card-details">
-                            <span class="card-sku">SKU-GC-025-AMEX</span>
-                            <div class="card-meta">
-                                <span>$25.00</span>
-                                <span>× 10 cards</span>
-                            </div>
-                            <span class="card-id">Card ID: GC-2024-A025-003</span>
-                        </div>
+                            Edit
+                        </button>
+                        <span class="status-badge empty">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" x2="12" y1="8" y2="16"/>
+                                <line x1="8" x2="16" y1="12" y2="12"/>
+                            </svg>
+                            Not Started
+                        </span>
                     </div>
-                    <span class="status-badge empty">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" x2="12" y1="8" y2="16"/>
-                            <line x1="8" x2="16" y1="12" y2="12"/>
-                        </svg>
-                        Not Started
-                    </span>
                 </div>
                 <div class="card-range-inputs">
                     <div class="input-group">
                         <label>First Card</label>
-                        <input type="text" placeholder="Enter first card number">
+                        <input type="text" placeholder="Enter first card number" disabled>
                     </div>
                     <div class="input-group">
                         <label>Last Card</label>
-                        <input type="text" placeholder="Enter last card number">
+                        <input type="text" placeholder="Enter last card number" disabled>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Add Card Button -->
+        <button class="add-card-btn" onclick="addCardRange()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" x2="12" y1="8" y2="16"/>
+                <line x1="8" x2="16" y1="12" y2="12"/>
+            </svg>
+            Add Another Card Range
+        </button>
 
         <!-- Tracking Section -->
         <div class="tracking-section">
@@ -921,6 +1013,93 @@
             });
         });
 
+        // Toggle edit mode for card inputs
+        function toggleEdit(button) {
+            const cardItem = button.closest('.card-range-item');
+            const inputs = cardItem.querySelectorAll('input');
+            const isEditing = button.classList.contains('editing');
+
+            if (isEditing) {
+                // Disable editing
+                inputs.forEach(input => input.disabled = true);
+                button.classList.remove('editing');
+                button.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                        <path d="m15 5 4 4"/>
+                    </svg>
+                    Edit
+                `;
+            } else {
+                // Enable editing
+                inputs.forEach(input => input.disabled = false);
+                button.classList.add('editing');
+                button.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Save
+                `;
+                inputs[0].focus();
+            }
+        }
+
+        // Add new card range (visual only - no functionality)
+        let cardCounter = 3;
+        function addCardRange() {
+            const container = document.getElementById('cardRangesContainer');
+            const newCard = document.createElement('div');
+            newCard.className = 'card-range-item';
+            newCard.innerHTML = `
+                <div class="card-range-header">
+                    <div class="card-info">
+                        <div class="card-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                <line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="card-details">
+                            <span class="card-sku">SKU-GC-025-NEW</span>
+                            <div class="card-meta">
+                                <span>$25.00</span>
+                                <span>× 10 cards</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="edit-btn" onclick="toggleEdit(this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                <path d="m15 5 4 4"/>
+                            </svg>
+                            Edit
+                        </button>
+                        <span class="status-badge empty">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" x2="12" y1="8" y2="16"/>
+                                <line x1="8" x2="16" y1="12" y2="12"/>
+                            </svg>
+                            Not Started
+                        </span>
+                    </div>
+                </div>
+                <div class="card-range-inputs">
+                    <div class="input-group">
+                        <label>First Card</label>
+                        <input type="text" placeholder="Enter first card number" disabled>
+                    </div>
+                    <div class="input-group">
+                        <label>Last Card</label>
+                        <input type="text" placeholder="Enter last card number" disabled>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newCard);
+            cardCounter++;
+        }
+
         // Submit button functionality
         const submitBtn = document.getElementById('submitBtn');
         const trackingInput = document.getElementById('trackingInput');
@@ -928,7 +1107,7 @@
         const successMessage = document.getElementById('successMessage');
 
         submitBtn.addEventListener('click', function() {
-            // Simulate submission - generate tracking ID
+            // Simulate submission
             const trackingId = 'TRK-' + Date.now().toString().slice(-10);
             
             // Show success message
@@ -957,7 +1136,6 @@
         // Confirm tracking functionality
         confirmTrackingBtn.addEventListener('click', function() {
             if (trackingInput.value.trim()) {
-                // Update success message
                 successMessage.innerHTML = `
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -966,7 +1144,6 @@
                     <span>Order completed! Tracking: ${trackingInput.value}</span>
                 `;
                 
-                // Disable tracking input
                 trackingInput.disabled = true;
                 confirmTrackingBtn.disabled = true;
                 confirmTrackingBtn.textContent = 'Confirmed';
@@ -974,14 +1151,14 @@
         });
 
         // Input validation for card numbers (format as user types)
-        document.querySelectorAll('.card-range-inputs input:not([disabled])').forEach(input => {
-            input.addEventListener('input', function(e) {
+        document.addEventListener('input', function(e) {
+            if (e.target.matches('.card-range-inputs input') && !e.target.disabled) {
                 let value = e.target.value.replace(/\D/g, '');
                 let formatted = value.match(/.{1,4}/g)?.join('-') || value;
                 if (formatted.length <= 19) {
                     e.target.value = formatted;
                 }
-            });
+            }
         });
     </script>
 </body>

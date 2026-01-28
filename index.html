@@ -36,6 +36,11 @@
             --warning: #f59e0b;
             --error: #ef4444;
             
+            /* Status Bar Colors */
+            --status-completed: #5C2D91;
+            --status-pending: #cbd5e1;
+            --status-line: #e2e8f0;
+            
             /* Shadows */
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -116,6 +121,79 @@
             letter-spacing: -0.02em;
         }
 
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Dark/Light Mode Toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--empire-purple);
+            background: var(--surface-elevated);
+        }
+
+        .theme-toggle-track {
+            width: 44px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .theme-toggle-thumb {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .theme-toggle-thumb svg {
+            width: 12px;
+            height: 12px;
+            color: var(--warning);
+        }
+
+        .theme-toggle.dark .theme-toggle-track {
+            background: var(--empire-purple);
+        }
+
+        .theme-toggle.dark .theme-toggle-thumb {
+            left: 22px;
+        }
+
+        .theme-toggle.dark .theme-toggle-thumb svg {
+            color: var(--empire-purple);
+        }
+
+        .theme-toggle-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
         /* Tabs */
         .tabs-container {
             background: var(--surface);
@@ -165,7 +243,7 @@
             border-radius: var(--radius-md);
         }
 
-        .tab:hover {
+        .tab:hover:not(.disabled) {
             color: var(--text-primary);
             background: var(--surface-elevated);
         }
@@ -180,6 +258,16 @@
 
         .tab.active:hover {
             background: transparent;
+        }
+
+        .tab.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .tab.disabled:hover {
+            background: transparent;
+            color: var(--text-secondary);
         }
 
         .tab span {
@@ -206,6 +294,11 @@
         .tab.active .tab-count {
             background: rgba(255, 255, 255, 0.25);
             color: white;
+        }
+
+        .tab.disabled .tab-count {
+            background: rgba(100, 116, 139, 0.1);
+            color: var(--text-muted);
         }
 
         /* Controls Bar */
@@ -313,7 +406,7 @@
         /* Table Header */
         .table-header {
             display: grid;
-            grid-template-columns: 1fr 200px 320px;
+    grid-template-columns: 1fr 1fr 1.5fr;
             padding: 16px 24px;
             background: var(--surface-elevated);
             border-bottom: 1px solid var(--border);
@@ -326,11 +419,11 @@
 
         /* Table Row */
         .table-row {
-            display: grid;
-            grid-template-columns: 1fr 200px 320px;
+          display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr;
             padding: 20px 24px;
             border-bottom: 1px solid var(--border-light);
-            align-items: center;
+            align-items: start;
             transition: var(--transition);
         }
 
@@ -357,43 +450,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .order-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 3px 10px;
-            border-radius: 16px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: 0.02em;
-        }
-
-        .order-badge.processing {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-
-        .order-badge.shipped {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        .order-badge.issue {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-        }
-
-        .order-badge.pending {
-            background: rgba(100, 116, 139, 0.1);
-            color: var(--text-secondary);
-        }
-
-        .order-badge svg {
-            width: 11px;
-            height: 11px;
         }
 
         .order-details {
@@ -432,6 +488,13 @@
         .org-location {
             font-size: 0.8rem;
             color: var(--text-secondary);
+        }
+
+        /* Actions Column */
+        .actions-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         /* Actions */
@@ -505,6 +568,107 @@
         .action-btn svg {
             width: 14px;
             height: 14px;
+        }
+
+        /* Order Status Bar */
+        .order-status {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            position: relative;
+            padding: 0 8px;
+        }
+
+        .status-line {
+            position: absolute;
+            top: 12px;
+            left: 32px;
+            right: 32px;
+            height: 2px;
+            background: var(--status-line);
+            z-index: 0;
+        }
+
+        .status-line-progress {
+            position: absolute;
+            top: 12px;
+            left: 32px;
+            height: 2px;
+            background: var(--status-completed);
+            z-index: 1;
+            transition: width 0.3s ease;
+        }
+
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+            min-width: 60px;
+        }
+
+        .status-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            border: 2px solid var(--status-pending);
+            transition: var(--transition);
+        }
+
+        .status-circle.completed {
+            background: var(--status-completed);
+            border-color: var(--status-completed);
+        }
+
+        .status-circle.active {
+            background: var(--surface);
+            border-color: var(--status-completed);
+            border-width: 2px;
+        }
+
+        .status-circle svg {
+            width: 12px;
+            height: 12px;
+            color: white;
+        }
+
+        .status-circle.active svg,
+        .status-circle:not(.completed) svg {
+            display: none;
+        }
+
+        .status-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .status-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: capitalize;
+        }
+
+        .status-step.completed .status-label,
+        .status-step.active .status-label {
+            color: var(--status-completed);
+        }
+
+        .status-date {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+        }
+
+        .status-user {
+            font-size: 0.55rem;
+            color: var(--text-muted);
         }
 
         /* Pagination */
@@ -624,10 +788,10 @@
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .table-header,
-            .table-row {
-                grid-template-columns: 1fr 160px 260px;
-            }
+           .table-header,
+    .table-row {
+        grid-template-columns: 1fr 1fr 1.5fr;
+    }
         }
 
         @media (max-width: 992px) {
@@ -674,6 +838,16 @@
                 padding-left: 0;
                 border-left: none;
             }
+
+            .order-status {
+                padding: 0;
+            }
+
+            .status-line,
+            .status-line-progress {
+                left: 20px;
+                right: 20px;
+            }
         }
 
         /* Tooltip */
@@ -717,6 +891,26 @@
                 </svg>
             </div>
             <h1>Fulfillment Portal</h1>
+            <div class="header-right">
+                <div class="theme-toggle" id="themeToggle">
+                    <span class="theme-toggle-label">Light</span>
+                    <div class="theme-toggle-track">
+                        <div class="theme-toggle-thumb">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" x2="12" y1="1" y2="3"></line>
+                                <line x1="12" x2="12" y1="21" y2="23"></line>
+                                <line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+                                <line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+                                <line x1="1" x2="3" y1="12" y2="12"></line>
+                                <line x1="21" x2="23" y1="12" y2="12"></line>
+                                <line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+                                <line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <!-- Tabs -->
@@ -725,10 +919,13 @@
                 <span>Orders</span>
                 <span class="tab-count">24</span>
             </button>
-            <button class="tab">
+            <button class="tab disabled" disabled>
+                <span>Job Status</span>
+            </button>
+            <button class="tab disabled" disabled>
                 <span>Reports</span>
             </button>
-            <button class="tab">
+            <button class="tab disabled" disabled>
                 <span>Activity Logs</span>
             </button>
         </nav>
@@ -775,72 +972,14 @@
             <div class="table-header">
                 <div>Order Details</div>
                 <div>Organization</div>
-                <div style="text-align: right;">Actions</div>
+                <div style="text-align: right;">Actions & Status</div>
             </div>
 
-            <!-- Row 1 - Processing -->
-            <div class="table-row">
-                <div class="order-info">
-                    <div class="order-number">
-                        #ORD-2024-001847
-                        
-                    </div>
-                    <div class="order-details">
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            </svg>
-                            10 items
-                        </span>
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                                <line x1="2" x2="22" y1="10" y2="10"></line>
-                            </svg>
-                            $2,450.00
-                        </span>
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            Jan 1, 2026
-                        </span>
-                    </div>
-                </div>
-                <div class="organization">
-                    <span class="org-name">Acme Corporation</span>
-                    <span class="org-location">Toronto, ON</span>
-                </div>
-                <div class="actions">
-                    <button class="action-btn notes tooltip" data-tooltip="View order notes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" x2="8" y1="13" y2="13"></line>
-                            <line x1="16" x2="8" y1="17" y2="17"></line>
-                            <line x1="10" x2="8" y1="9" y2="9"></line>
-                        </svg>
-                        Notes
-                    </button>
-                    <button class="action-btn card-range" onclick="window.location.href='cardRange.html'">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        Enter Card Range
-                    </button>
-                </div>
-            </div>
-
-            <!-- Row 2 - Shipped -->
+            <!-- Row 2 - Shipped (Step 3 of 4) -->
             <div class="table-row">
                 <div class="order-info">
                     <div class="order-number">
                         #ORD-2024-001846
-                       
                     </div>
                     <div class="order-details">
                         <span class="order-detail">
@@ -848,13 +987,6 @@
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                             </svg>
                             12 items
-                        </span>
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                                <line x1="2" x2="22" y1="10" y2="10"></line>
-                            </svg>
-                            $2,450.00
                         </span>
                         <span class="order-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -871,33 +1003,87 @@
                     <span class="org-name">TechFlow Industries</span>
                     <span class="org-location">Vancouver, BC</span>
                 </div>
-                <div class="actions">
-                    <button class="action-btn notes has-notes tooltip" data-tooltip="2 notes attached">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" x2="8" y1="13" y2="13"></line>
-                            <line x1="16" x2="8" y1="17" y2="17"></line>
-                            <line x1="10" x2="8" y1="9" y2="9"></line>
-                        </svg>
-                        Notes (2)
-                    </button>
-                    <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        View Card Range
-                    </button>
+                <div class="actions-column">
+                    <div class="actions">
+                        <button class="action-btn notes has-notes tooltip" data-tooltip="2 notes attached">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" x2="8" y1="13" y2="13"></line>
+                                <line x1="16" x2="8" y1="17" y2="17"></line>
+                                <line x1="10" x2="8" y1="9" y2="9"></line>
+                            </svg>
+                            Notes (2)
+                        </button>
+                        <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            View Card Details
+                        </button>
+                    </div>
+                    <!-- Order Status Bar -->
+                    <div class="order-status">
+                        <div class="status-line"></div>
+                        <div class="status-line-progress" style="width: calc(66.66% - 16px);"></div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Submitted</span>
+                                <span class="status-date">Dec 28 9:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Processing</span>
+                                <span class="status-date">Dec 28 11:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step active">
+                            <div class="status-circle active">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Shipping</span>
+                                <span class="status-date">Dec 29 8:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Activated</span>
+                                <span class="status-date">TBD</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Row 3 - Issue -->
+            <!-- Row 3 - Submitted (Step 1 of 4) -->
             <div class="table-row">
                 <div class="order-info">
                     <div class="order-number">
                         #ORD-2024-001845
-                       
                     </div>
                     <div class="order-details">
                         <span class="order-detail">
@@ -905,13 +1091,6 @@
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                             </svg>
                             8 items
-                        </span>
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                                <line x1="2" x2="22" y1="10" y2="10"></line>
-                            </svg>
-                            $2,450.00
                         </span>
                         <span class="order-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -928,33 +1107,87 @@
                     <span class="org-name">Northern Retail Co.</span>
                     <span class="org-location">Calgary, AB</span>
                 </div>
-                <div class="actions">
-                    <button class="action-btn notes has-notes tooltip" data-tooltip="1 note attached">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" x2="8" y1="13" y2="13"></line>
-                            <line x1="16" x2="8" y1="17" y2="17"></line>
-                            <line x1="10" x2="8" y1="9" y2="9"></line>
-                        </svg>
-                        Notes (1)
-                    </button>
-                    <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        View Card Range
-                    </button>
+                <div class="actions-column">
+                    <div class="actions">
+                        <button class="action-btn notes has-notes tooltip" data-tooltip="1 note attached">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" x2="8" y1="13" y2="13"></line>
+                                <line x1="16" x2="8" y1="17" y2="17"></line>
+                                <line x1="10" x2="8" y1="9" y2="9"></line>
+                            </svg>
+                            Notes (1)
+                        </button>
+                        <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            View Card Details
+                        </button>
+                    </div>
+                    <!-- Order Status Bar -->
+                    <div class="order-status">
+                        <div class="status-line"></div>
+                        <div class="status-line-progress" style="width: 0%;"></div>
+                        <div class="status-step active">
+                            <div class="status-circle active">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Submitted</span>
+                                <span class="status-date">Dec 27 10:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Processing</span>
+                                <span class="status-date">TBD</span>
+                                <span class="status-user"></span>
+                            </div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Shipping</span>
+                                <span class="status-date">TBD</span>
+                                <span class="status-user"></span>
+                            </div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Activated</span>
+                                <span class="status-date">TBD</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Row 4 - Pending -->
+            <!-- Row 4 - Activated (Step 4 of 4 - Complete) -->
             <div class="table-row">
                 <div class="order-info">
                     <div class="order-number">
                         #ORD-2024-001844
-                        
                     </div>
                     <div class="order-details">
                         <span class="order-detail">
@@ -962,13 +1195,6 @@
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                             </svg>
                             3 items
-                        </span>
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                                <line x1="2" x2="22" y1="10" y2="10"></line>
-                            </svg>
-                            $2,450.00
                         </span>
                         <span class="order-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -985,33 +1211,87 @@
                     <span class="org-name">Maple Leaf Stores</span>
                     <span class="org-location">Montreal, QC</span>
                 </div>
-                <div class="actions">
-                    <button class="action-btn notes tooltip" data-tooltip="View order notes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" x2="8" y1="13" y2="13"></line>
-                            <line x1="16" x2="8" y1="17" y2="17"></line>
-                            <line x1="10" x2="8" y1="9" y2="9"></line>
-                        </svg>
-                        Notes
-                    </button>
-                    <button class="action-btn card-range" onclick="window.location.href='cardRange.html'">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        Enter Card Range
-                    </button>
+                <div class="actions-column">
+                    <div class="actions">
+                        <button class="action-btn notes tooltip" data-tooltip="View order notes">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" x2="8" y1="13" y2="13"></line>
+                                <line x1="16" x2="8" y1="17" y2="17"></line>
+                                <line x1="10" x2="8" y1="9" y2="9"></line>
+                            </svg>
+                            Notes
+                        </button>
+                        <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            View Card Details
+                        </button>
+                    </div>
+                    <!-- Order Status Bar - Complete -->
+                    <div class="order-status">
+                        <div class="status-line"></div>
+                        <div class="status-line-progress" style="width: calc(100% - 64px);"></div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Submitted</span>
+                                <span class="status-date">Dec 20 8:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Processing</span>
+                                <span class="status-date">Dec 21 10:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Shipping</span>
+                                <span class="status-date">Dec 23 14:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Activated</span>
+                                <span class="status-date">Dec 26 9:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Row 5 - Shipped -->
+            <!-- Row 5 - Processing -->
             <div class="table-row">
                 <div class="order-info">
                     <div class="order-number">
                         #ORD-2024-001843
-                        
                     </div>
                     <div class="order-details">
                         <span class="order-detail">
@@ -1019,13 +1299,6 @@
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                             </svg>
                             20 items
-                        </span>
-                        <span class="order-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                                <line x1="2" x2="22" y1="10" y2="10"></line>
-                            </svg>
-                            $2,450.00
                         </span>
                         <span class="order-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1042,24 +1315,79 @@
                     <span class="org-name">Pacific Distribution</span>
                     <span class="org-location">Edmonton, AB</span>
                 </div>
-                <div class="actions">
-                    <button class="action-btn notes tooltip" data-tooltip="View order notes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" x2="8" y1="13" y2="13"></line>
-                            <line x1="16" x2="8" y1="17" y2="17"></line>
-                            <line x1="10" x2="8" y1="9" y2="9"></line>
-                        </svg>
-                        Notes
-                    </button>
-                    <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        View Card Range
-                    </button>
+                <div class="actions-column">
+                    <div class="actions">
+                        <button class="action-btn notes tooltip" data-tooltip="View order notes">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" x2="8" y1="13" y2="13"></line>
+                                <line x1="16" x2="8" y1="17" y2="17"></line>
+                                <line x1="10" x2="8" y1="9" y2="9"></line>
+                            </svg>
+                            Notes
+                        </button>
+                        <button class="action-btn card-range view" onclick="window.location.href='cardRange.html'">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            View Card Details
+                        </button>
+                    </div>
+                    <!-- Order Status Bar -->
+                    <div class="order-status">
+                        <div class="status-line"></div>
+                        <div class="status-line-progress" style="width: calc(33.33% - 16px);"></div>
+                        <div class="status-step completed">
+                            <div class="status-circle completed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Submitted</span>
+                                <span class="status-date">Dec 24 7:30</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step active">
+                            <div class="status-circle active">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Processing</span>
+                                <span class="status-date">Dec 24 12:00</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Shipping</span>
+                                <span class="status-date">TBD</span>
+                                <span class="status-user"></span>
+                            </div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="status-info">
+                                <span class="status-label">Activated</span>
+                                <span class="status-date">TBD</span>
+                                <span class="status-user">[User]</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1102,16 +1430,47 @@
 
     <script>
         // Tab switching functionality
-        document.querySelectorAll('.tab').forEach(tab => {
+        document.querySelectorAll('.tab:not(.disabled)').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
             });
         });
 
-        // Search functionality (placeholder)
+        // Search functionality (front-end filter placeholder)
         document.querySelector('.search-input').addEventListener('input', function(e) {
-            console.log('Searching for:', e.target.value);
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.table-row').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Theme toggle (visual only - no functionality as requested)
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            this.classList.toggle('dark');
+            const label = this.querySelector('.theme-toggle-label');
+            const thumb = this.querySelector('.theme-toggle-thumb');
+            
+            if (this.classList.contains('dark')) {
+                label.textContent = 'Dark';
+                thumb.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>`;
+            } else {
+                label.textContent = 'Light';
+                thumb.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" x2="12" y1="1" y2="3"></line>
+                    <line x1="12" x2="12" y1="21" y2="23"></line>
+                    <line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+                    <line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+                    <line x1="1" x2="3" y1="12" y2="12"></line>
+                    <line x1="21" x2="23" y1="12" y2="12"></line>
+                    <line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+                    <line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+                </svg>`;
+            }
         });
 
         // Button click handlers
